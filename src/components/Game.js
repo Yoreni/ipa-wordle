@@ -1,18 +1,20 @@
 import { useState } from 'react';
+import { useKey } from '../useKey';
 import '../App.css';
 
-function BoardRow({ key, gameState })
+function BoardRow({ index, currentGuess, guesses, target })
 {
-    function getWord(gameState)
+    function getWord()
     {
-        if (gameState.guesses.length < key)
-            return gameState.guesses[key]
-        if (gameState.guesses.length === key)
-            return gameState.currentGuess.padEnd(5, ' ');
+        console.log(index, guesses.length)
+        if (index < guesses.length)
+            return guesses[index];
+        if (guesses.length === index)
+            return currentGuess.padEnd(5, ' ');
         return "     ";
     }
 
-    const word = getWord(gameState)
+    const word = getWord();
 
     let boardColums = []
     word.split("").forEach(element => {
@@ -28,11 +30,11 @@ function BoardRow({ key, gameState })
     </div>)
 }
 
-function Board({ gameState })
+function Board({ currentGuess, guesses, target })
 {
     let boardRows = []; 
     for (let index = 0; index < 6; ++index)
-        boardRows.push(<BoardRow key={index} gameState={gameState} />);
+        boardRows.push(<BoardRow index={index} currentGuess={currentGuess} guesses={guesses} target={target} />);
     
     return (<>
         {boardRows}
@@ -45,6 +47,24 @@ export function Game()
     const [guesses, setGuesses] = useState([]);
     const [targetWord, setTargetWord] = useState("CRANE")
 
-    const gameState = {currentGuess, setCurrentGuess, guesses, setGuesses, targetWord, setTargetWord}; 
-    return (<Board gameState={gameState}/>);
+    // const gameState = {currentGuess, setCurrentGuess, guesses, setGuesses, targetWord, setTargetWord}; 
+
+    function isLetter(char)
+    {
+        return "abcdefghijklmnopqrstuvwxyz".includes(char)
+    }
+
+    useKey(function(event)
+    {
+        if (event.key === "Backspace")
+            setCurrentGuess(previousGuess => previousGuess.substring(0, previousGuess.length - 1))
+        if (isLetter(event.key))
+            setCurrentGuess(previousGuess => previousGuess.length < 5 ? previousGuess + event.key : previousGuess)
+        if (event.key === "Enter")
+        {
+    
+        }
+    })
+
+    return (<Board currentGuess={currentGuess} guesses={guesses} target={targetWord}/>);
 }
