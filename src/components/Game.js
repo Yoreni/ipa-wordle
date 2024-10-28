@@ -22,7 +22,7 @@ function BoardRow({ index, currentGuess, guesses, target })
     })
 
     return (<div>
-    <table border="1">
+    <table border="1" style={{width: "10%", height: "32px", tableLayout: "fixed", wordWrap: "break-word"}}>
         <tr>
             {boardColums}
         </tr>
