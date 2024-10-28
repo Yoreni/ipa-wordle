@@ -1,34 +1,50 @@
+import { useState } from 'react';
 import '../App.css';
 
-function BoardRow()
+function BoardRow({ key, gameState })
 {
-    let word = "CRANE"
+    function getWord(gameState)
+    {
+        if (gameState.guesses.length < key)
+            return gameState.guesses[key]
+        if (gameState.guesses.length === key)
+            return gameState.currentGuess.padEnd(5, ' ');
+        return "     ";
+    }
+
+    const word = getWord(gameState)
+
+    let boardColums = []
+    word.split("").forEach(element => {
+        boardColums.push(<td>{element ?? " "}</td>); 
+    })
+
     return (<div>
     <table border="1">
         <tr>
-            <td>{word[0]}</td>
-            <td>{word[1]}</td>
-            <td>{word[2]}</td>
-            <td>{word[3]}</td>
-            <td>{word[4]}</td>
+            {boardColums}
         </tr>
     </table>
     </div>)
 }
 
-function Board()
+function Board({ gameState })
 {
+    let boardRows = []; 
+    for (let index = 0; index < 6; ++index)
+        boardRows.push(<BoardRow key={index} gameState={gameState} />);
+    
     return (<>
-        <BoardRow />
-        <BoardRow />
-        <BoardRow />
-        <BoardRow />
-        <BoardRow />
-        <BoardRow />
+        {boardRows}
     </>);
 }
 
 export function Game()
 {
-    return (<Board/>);
+    const [currentGuess, setCurrentGuess] = useState("");
+    const [guesses, setGuesses] = useState([]);
+    const [targetWord, setTargetWord] = useState("CRANE")
+
+    const gameState = {currentGuess, setCurrentGuess, guesses, setGuesses, targetWord, setTargetWord}; 
+    return (<Board gameState={gameState}/>);
 }
