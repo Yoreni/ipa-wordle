@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useKey } from '../useKey';
 import '../App.css';
+import { getRandomWord, isWord } from '../dictionary';
 
 function BoardRow({ index, currentGuess, guesses, target })
 {
@@ -59,7 +60,7 @@ export function Game()
 {
     const [currentGuess, setCurrentGuess] = useState("");
     const [guesses, setGuesses] = useState([]);
-    const [targetWord, setTargetWord] = useState("crane")
+    const [targetWord, setTargetWord] = useState(getRandomWord())
 
     function isLetter(char)
     {
@@ -80,7 +81,7 @@ export function Game()
         if (event.key === "Enter")
         {
             const lastetGuess = currentGuessRef.current;
-            const isValid = lastetGuess.length === 5;
+            const isValid = lastetGuess.length === 5 && isWord(lastetGuess);
             if (isValid)
             {
                 setGuesses(previousGuesses => [...previousGuesses, lastetGuess]);
