@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useKey } from '../useKey';
 import '../App.css';
 
@@ -14,12 +14,26 @@ function BoardRow({ index, currentGuess, guesses, target })
         return "     ";
     }
 
+    function getBackground(charIndex, word)
+    {
+        const char = word[charIndex]
+        if (index >= guesses.length)
+            return "white"
+        if (!target.includes(char))
+            return "grey"
+        if (char === target[charIndex])
+            return "green"
+        return "yellow"
+    }
+
     const word = getWord();
 
     let boardColums = []
-    word.split("").forEach(element => {
-        boardColums.push(<td>{element ?? " "}</td>); 
-    })
+    for (let charIndex in word)
+    {
+        const char = word[charIndex];
+        boardColums.push(<td style={{backgroundColor: getBackground(charIndex, word)}}>{char ?? " "}</td>); 
+    }
 
     return (<div>
     <table border="1" style={{width: "10%", height: "32px", tableLayout: "fixed", wordWrap: "break-word"}}>
@@ -45,12 +59,17 @@ export function Game()
 {
     const [currentGuess, setCurrentGuess] = useState("");
     const [guesses, setGuesses] = useState([]);
-    const [targetWord, setTargetWord] = useState("CRANE")
+    const [targetWord, setTargetWord] = useState("crane")
 
     function isLetter(char)
     {
         return "abcdefghijklmnopqrstuvwxyz".includes(char)
     }
+
+    const currentGuessRef = useRef(currentGuess);
+    useEffect(() => {
+        currentGuessRef.current = currentGuess;
+    }, [currentGuess]);
 
     useKey(function(event)
     {
@@ -60,13 +79,13 @@ export function Game()
             setCurrentGuess(previousGuess => previousGuess.length < 5 ? previousGuess + event.key : previousGuess)
         if (event.key === "Enter")
         {
-            let lastetGuess;
-            setCurrentGuess(guess =>
+            const lastetGuess = currentGuessRef.current;
+            const isValid = lastetGuess.length === 5;
+            if (isValid)
             {
-                lastetGuess = guess;
-                return "";
-            });
-            setGuesses(previousGuesses => [...previousGuesses, lastetGuess]);
+                setGuesses(previousGuesses => [...previousGuesses, lastetGuess]);
+                setCurrentGuess("");
+            }
         }
     })
 
