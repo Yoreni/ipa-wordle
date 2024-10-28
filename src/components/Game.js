@@ -6,9 +6,9 @@ function BoardRow({ index, currentGuess, guesses, target })
 {
     function getWord()
     {
-        console.log(index, guesses.length)
+        // console.log(index, guesses.length)
         if (index < guesses.length)
-            return guesses[index];
+            return guesses[index].padEnd(5, ' ');
         if (guesses.length === index)
             return currentGuess.padEnd(5, ' ');
         return "     ";
@@ -34,7 +34,7 @@ function Board({ currentGuess, guesses, target })
 {
     let boardRows = []; 
     for (let index = 0; index < 6; ++index)
-        boardRows.push(<BoardRow index={index} currentGuess={currentGuess} guesses={guesses} target={target} />);
+        boardRows.push(<BoardRow key={index} index={index} currentGuess={currentGuess} guesses={guesses} target={target} />);
     
     return (<>
         {boardRows}
@@ -46,8 +46,6 @@ export function Game()
     const [currentGuess, setCurrentGuess] = useState("");
     const [guesses, setGuesses] = useState([]);
     const [targetWord, setTargetWord] = useState("CRANE")
-
-    // const gameState = {currentGuess, setCurrentGuess, guesses, setGuesses, targetWord, setTargetWord}; 
 
     function isLetter(char)
     {
@@ -62,7 +60,13 @@ export function Game()
             setCurrentGuess(previousGuess => previousGuess.length < 5 ? previousGuess + event.key : previousGuess)
         if (event.key === "Enter")
         {
-    
+            let lastetGuess;
+            setCurrentGuess(guess =>
+            {
+                lastetGuess = guess;
+                return "";
+            });
+            setGuesses(previousGuesses => [...previousGuesses, lastetGuess]);
         }
     })
 
