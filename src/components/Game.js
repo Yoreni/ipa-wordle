@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useKey } from '../useKey';
 import '../App.css';
-import { getRandomWord, isWord } from '../dictionary';
+import { isWord } from '../dictionary';
 
 function BoardRow({ index, currentGuess, guesses, target })
 {
@@ -56,21 +56,28 @@ function Board({ currentGuess, guesses, target })
     </>);
 }
 
-export function Game()
+function useStateRef(stateVarible)
+{
+    const referance = useRef(stateVarible);
+    useEffect(() => {
+        referance.current = stateVarible;
+    }, [stateVarible]);
+    return referance;
+}
+
+export function Game( {setPage, target} )
 {
     const [currentGuess, setCurrentGuess] = useState("");
     const [guesses, setGuesses] = useState([]);
-    const [targetWord, setTargetWord] = useState(getRandomWord())
 
     function isLetter(char)
     {
         return "abcdefghijklmnopqrstuvwxyz".includes(char)
     }
 
-    const currentGuessRef = useRef(currentGuess);
-    useEffect(() => {
-        currentGuessRef.current = currentGuess;
-    }, [currentGuess]);
+    const currentGuessRef = useStateRef(currentGuess);
+    const guessesRef = useStateRef(guesses);
+
 
     useKey(function(event)
     {
@@ -81,14 +88,27 @@ export function Game()
         if (event.key === "Enter")
         {
             const lastetGuess = currentGuessRef.current;
-            const isValid = lastetGuess.length === 5 && isWord(lastetGuess);
+            const currentGuesses = guessesRef.current;
+            const isValid = lastetGuess.length === 5 && isWord(lastetGuess) && currentGuesses.length < 6 
+                && !currentGuesses.includes(lastetGuess);
             if (isValid)
             {
+                //add guess
                 setGuesses(previousGuesses => [...previousGuesses, lastetGuess]);
                 setCurrentGuess("");
+
+                //check for win or lose
+                if (lastetGuess === target)
+                    alert("You win")
+                if (guessesRef.current.length === 5)
+                    alert("You lose")
             }
         }
     })
 
-    return (<Board currentGuess={currentGuess} guesses={guesses} target={targetWord}/>);
+    return (
+    <div>
+        <Board currentGuess={currentGuess} guesses={guesses} target={target}/>
+    </div>
+    );
 }
