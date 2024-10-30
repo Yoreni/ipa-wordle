@@ -99,9 +99,9 @@ export function Game( {setPage, target} )
 
                 //check for win or lose
                 if (lastetGuess === target)
-                    alert("You win")
+                    setPage("win")
                 if (guessesRef.current.length === 5)
-                    alert("You lose")
+                    setPage("lose")
             }
         }
     })
