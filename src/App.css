@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.undiscovered {
+  background-color: white;
+}
+
+.not-in-word {
+  background-color: grey;
+}
+
+.almost-hint {
+  background-color: yellow;
+}
+
+.correct {
+  background-color: green;
+}

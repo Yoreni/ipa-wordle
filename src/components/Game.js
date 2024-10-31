@@ -4,7 +4,9 @@ import '../App.css';
 import { isWord } from '../dictionary';
 import { Keyboard } from './Keyboard';
 
-function BoardRow({ index, currentGuess, guesses, target })
+const backgroundColours = ["white", "grey", "yellow", "green"]
+
+function BoardRow({ index, currentGuess, guesses, target, hints })
 {
     function getWord()
     {
@@ -45,11 +47,11 @@ function BoardRow({ index, currentGuess, guesses, target })
     </div>)
 }
 
-function Board({ currentGuess, guesses, target })
+function Board({ currentGuess, guesses, target, hints })
 {
     let boardRows = []; 
     for (let index = 0; index < 6; ++index)
-        boardRows.push(<BoardRow key={index} index={index} currentGuess={currentGuess} guesses={guesses} target={target} />);
+        boardRows.push(<BoardRow key={index} index={index} currentGuess={currentGuess} guesses={guesses} target={target} hints={hints}/>);
     
     return (<>
         {boardRows}
@@ -129,6 +131,7 @@ export function Game( {setPage, target} )
 
     const currentGuessRef = useStateRef(currentGuess);
     const guessesRef = useStateRef(guesses);
+    const hintsRef = useStateRef(hints)
 
     function enterChar(char)
     {
@@ -144,6 +147,7 @@ export function Game( {setPage, target} )
     {
         const lastetGuess = currentGuessRef.current;
         const currentGuesses = guessesRef.current;
+
         const isValid = lastetGuess.length === 5 && isWord(lastetGuess) && currentGuesses.length < 6 
             && !currentGuesses.includes(lastetGuess);
         if (isValid)
@@ -152,12 +156,12 @@ export function Game( {setPage, target} )
             setGuesses(previousGuesses => [...previousGuesses, lastetGuess]);
             setCurrentGuess("");
 
-            evalHints(target, lastetGuess, hints);
+            setHints(evalHints(target, lastetGuess, hintsRef.current));
 
             //check for win or lose
             if (lastetGuess === target)
                 setPage("win")
-            if (guessesRef.current.length === 5)
+            else if (guessesRef.current.length === 5)
                 setPage("lose")
         }
     }
@@ -174,8 +178,8 @@ export function Game( {setPage, target} )
 
     return (
     <div>
-        <Board currentGuess={currentGuess} guesses={guesses} target={target} />
-        <Keyboard onPress={enterChar} onBackspace={backspace} onEnter={enterGuess} ></Keyboard>
+        <Board currentGuess={currentGuess} guesses={guesses} target={target} hints={hints}/>
+        <Keyboard onPress={enterChar} onBackspace={backspace} onEnter={enterGuess} hintsRef={hintsRef}></Keyboard>
     </div>
     );
 }
