@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useKey } from "../useKey";
+import { useKey } from "../hooks/useKey";
 
 export function Modal({ isOpen, hasCloseBtn, onClose, children })
 {

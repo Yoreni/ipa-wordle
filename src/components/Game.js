@@ -1,74 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { useKey } from '../useKey';
+import { useState } from 'react';
+import { useKey } from '../hooks/useKey';
+import { useStateRef } from '../hooks/useStateRef';
 import '../App.css';
 import { isWord } from '../dictionary';
 import { Keyboard } from './Keyboard';
-
-function BoardRow({ index, currentGuess, guesses, target, hints })
-{
-    function getWord()
-    {
-        if (index < guesses.length)
-            return guesses[index].padEnd(5, ' ');
-        if (guesses.length === index)
-            return currentGuess.padEnd(5, ' ');
-        return "     ";
-    }
-
-    function getBackground(charIndex, word)
-    {
-        const char = word[charIndex]
-        if (index >= guesses.length)
-            return "white"
-        if (!target.includes(char))
-            return "grey"
-        if (char === target[charIndex])
-            return "green"
-        return "yellow"
-    }
-
-    const word = getWord();
-
-    let boardColums = []
-    for (let charIndex in word)
-    {
-        const char = word[charIndex];
-        boardColums.push(<td style={{backgroundColor: getBackground(charIndex, word)}}>{char ?? " "}</td>); 
-    }
-
-    return (<div>
-    <table border="1" style={{width: "10%", height: "32px", tableLayout: "fixed", wordWrap: "break-word"}}>
-        <tr>
-            {boardColums}
-        </tr>
-    </table>
-    </div>)
-}
-
-function Board({ currentGuess, guesses, target, hints })
-{
-    let boardRows = []; 
-    for (let index = 0; index < 6; ++index)
-        boardRows.push(<BoardRow key={index} index={index} currentGuess={currentGuess} guesses={guesses} target={target} hints={hints}/>);
-    
-    return (<>
-        {boardRows}
-    </>);
-}
-
-function useStateRef(stateVarible)
-{
-    const referance = useRef(stateVarible);
-    useEffect(() => {
-        referance.current = stateVarible;
-    }, [stateVarible]);
-    return referance;
-}
-
-function isLetter(char)
-{
-    return "abcdefghijklmnopqrstuvwxyz".includes(char)
-}
+import { BoardRow } from './BoardRow';
 
 const hintsInit = {
     a: 0,
@@ -97,6 +33,22 @@ const hintsInit = {
     x: 0,
     y: 0,
     z: 0
+}
+
+function Board({ currentGuess, guesses, target, hints })
+{
+    let boardRows = []; 
+    for (let index = 0; index < 6; ++index)
+        boardRows.push(<BoardRow key={index} index={index} currentGuess={currentGuess} guesses={guesses} target={target} hints={hints}/>);
+    
+    return (<>
+        {boardRows}
+    </>);
+}
+
+function isLetter(char)
+{
+    return "abcdefghijklmnopqrstuvwxyz".includes(char)
 }
 
 function evalHints(target, guess, currentHints, setHints)
@@ -157,12 +109,11 @@ export function Game( {setPage, target} )
             setGuesses(previousGuesses => [...previousGuesses, lastetGuess]);
             setCurrentGuess("");
 
-            //check for win or lose
             let win;
             if (lastetGuess === target)
-                endGame(win = true);
+                endGame(win=true);
             else if (guessesRef.current.length === 5)
-                endGame(win = false);
+                endGame(win=false);
         }
     }
 

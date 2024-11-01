@@ -7,5 +7,5 @@ export function useKey(handleKeyDown)
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, []);
+    }, [handleKeyDown]);
 }
