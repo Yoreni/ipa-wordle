@@ -1,4 +1,7 @@
 const keyClasses = ["undiscovered", "not-in-word", "almost-hint", "correct"]
+const row1 = "qwertyuiop".split("")
+const row2 = "asdfghjkl".split("")
+const row3 = "zxcvbnm".split("")
 
 function Key( {char, onPress, hints} )
 {
@@ -23,25 +26,22 @@ function Key( {char, onPress, hints} )
 
 export function Keyboard( {onPress, onBackspace, onEnter, hintsRef} )
 {
-    const hints = hintsRef.current;
+    const hints = hintsRef.current
 
-    const row1 = "qwertyuiop".split("")
-    const row2 = "asdfghjkl".split("")
-    const row3 = "zxcvbnm".split("")
     return (
     <>
         <div>
-            {row1.map(char => <Key onPress={onPress} char={char} hints={hints}/>)}
+            {row1.map(char => <Key key={char} onPress={onPress} char={char} hints={hints}/>)}
         </div>
         <div>
-            {row2.map(char => <Key onPress={onPress} char={char} hints={hints}/>)}
+            {row2.map(char => <Key key={char} onPress={onPress} char={char} hints={hints}/>)}
         </div>
         <div>
-            {row3.map(char => <Key onPress={onPress} char={char} hints={hints}/>)}
+            {row3.map(char => <Key key={char} onPress={onPress} char={char} hints={hints}/>)}
         </div>
         <div>
-            <Key char="Backspace" onPress={onBackspace}/>
-            <Key char="Enter" onPress={onEnter}/>
+            <Key char="Backspace" key="0" onPress={onBackspace}/>
+            <Key char="Enter" key="1" onPress={onEnter}/>
         </div>
     </>)
 }

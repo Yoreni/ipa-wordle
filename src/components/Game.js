@@ -4,8 +4,6 @@ import '../App.css';
 import { isWord } from '../dictionary';
 import { Keyboard } from './Keyboard';
 
-const backgroundColours = ["white", "grey", "yellow", "green"]
-
 function BoardRow({ index, currentGuess, guesses, target, hints })
 {
     function getWord()
@@ -101,7 +99,7 @@ const hintsInit = {
     z: 0
 }
 
-function evalHints(target, guess, currentHints)
+function evalHints(target, guess, currentHints, setHints)
 {
     let nextHints = structuredClone(currentHints)
 
@@ -120,6 +118,7 @@ function evalHints(target, guess, currentHints)
         }
     }
 
+    setHints(nextHints);
     return nextHints;
 }
 
@@ -152,18 +151,25 @@ export function Game( {setPage, target} )
             && !currentGuesses.includes(lastetGuess);
         if (isValid)
         {
+            hintsRef.current = evalHints(target, lastetGuess, hintsRef.current, setHints);
+
             //add guess
             setGuesses(previousGuesses => [...previousGuesses, lastetGuess]);
             setCurrentGuess("");
 
-            setHints(evalHints(target, lastetGuess, hintsRef.current));
-
             //check for win or lose
+            let win;
             if (lastetGuess === target)
-                setPage("win")
+                endGame(win = true);
             else if (guessesRef.current.length === 5)
-                setPage("lose")
+                endGame(win = false);
         }
+    }
+
+    function endGame(hasWon)
+    {
+        const pageName = hasWon ? "win" : "lose";
+        setTimeout(() => setPage(pageName), 1000)
     }
 
     useKey(function(event)
