@@ -35,6 +35,56 @@ const hintsInit = {
     z: 0
 }
 
+const key_to_ipa = {
+    a: "a",
+    b: "b",
+    c: "ʧ",
+    d: "d",
+    e: "ɛ",
+    f: "f",
+    g: "g",
+    h: "h",
+    i: "ɪ",
+    j: "ʤ",
+    k: "k",
+    l: "l",
+    m: "m",
+    n: "n",
+    o: "ɔ",
+    p: "p",
+    q: "ŋ",
+    r: "r",
+    s: "s",
+    t: "t",
+    u: "ɵ",
+    v: "v",
+    w: "w",
+    x: "ə",
+    y: "y",
+    z: "z",
+    "1": "ɑː",
+    "2": "ɛː",
+    "3": "oː",
+    "4": "ɪː",
+    "5": "ɵː",
+    "6": "əː",
+    "7": "əw",
+    // "8": "",
+    // "9": "",
+    // "0": "",
+    "-": "θ",
+    "=": "ð",
+    "[": "ʃ",
+    "]": "ʒ",
+    // ";": "",
+    // "'": "",
+    // "#": "",
+    
+}
+// 123456789-=
+// qwertyuiop[]
+// asdfghjkl;'#
+// \zxcvbnm,./
 function Board({ currentGuess, guesses, target, hints })
 {
     let boardRows = []; 
@@ -84,8 +134,9 @@ export function Game( {setPage, target} )
     const guessesRef = useStateRef(guesses);
     const hintsRef = useStateRef(hints)
 
-    function enterChar(char)
+    function enterChar(key)
     {
+        const char = key_to_ipa[key]
         setCurrentGuess(previousGuess => previousGuess.length < 5 ? previousGuess + char : previousGuess)
     }
 
@@ -127,7 +178,7 @@ export function Game( {setPage, target} )
     {
         if (event.key === "Backspace")
             backspace()
-        if (isLetter(event.key))
+        if (key_to_ipa[event.key])
             enterChar(event.key)
         if (event.key === "Enter")
             enterGuess()
