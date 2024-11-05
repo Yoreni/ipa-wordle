@@ -3,10 +3,10 @@ export function BoardRow({ index, currentGuess, guesses, target, hints })
     function getWord()
     {
         if (index < guesses.length)
-            return guesses[index].padEnd(5, ' ');
+            return guesses[index];
         if (guesses.length === index)
-            return currentGuess.padEnd(5, ' ');
-        return "     ";
+            return currentGuess;
+        return [];
     }
 
     function getBackground(charIndex, word)
@@ -22,9 +22,9 @@ export function BoardRow({ index, currentGuess, guesses, target, hints })
     }
 
     const word = getWord();
-
+    
     let boardColums = []
-    for (let charIndex in word)
+    for (let charIndex = 0; charIndex < 5; ++charIndex)
     {
         const char = word[charIndex];
         boardColums.push(<td style={{backgroundColor: getBackground(charIndex, word)}}>{char ?? " "}</td>); 

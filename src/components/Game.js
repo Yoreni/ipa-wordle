@@ -60,7 +60,7 @@ const key_to_ipa = {
     v: "v",
     w: "w",
     x: "ə",
-    y: "y",
+    y: "j",
     z: "z",
     "1": "ɑː",
     "2": "ɛː",
@@ -79,8 +79,29 @@ const key_to_ipa = {
     // ";": "",
     // "'": "",
     // "#": "",
-    
 }
+
+const y_keybinds = {
+    "a": "ɑj",
+    "ɛ": "ɛj",
+    "ɪ": "ɪj",
+    "ɔ": "oj"
+}
+
+const w_keybinds = {
+    "a": "aw",
+    "ɵ": "ʉw",
+}
+
+const long_keybinds = {
+    "a": "ɑː",
+    "ɛ": "ɛː",
+    "ɔ": "oː",
+    "ɪ": "ɪː",
+    "ɵ": "ɵː",
+    "ə": "əː",
+}
+
 // 123456789-=
 // qwertyuiop[]
 // asdfghjkl;'#
@@ -94,11 +115,6 @@ function Board({ currentGuess, guesses, target, hints })
     return (<>
         {boardRows}
     </>);
-}
-
-function isLetter(char)
-{
-    return "abcdefghijklmnopqrstuvwxyz".includes(char)
 }
 
 function evalHints(target, guess, currentHints, setHints)
@@ -126,7 +142,7 @@ function evalHints(target, guess, currentHints, setHints)
 
 export function Game( {setPage, target} )
 {
-    const [currentGuess, setCurrentGuess] = useState("");
+    const [currentGuess, setCurrentGuess] = useState([]);
     const [guesses, setGuesses] = useState([]);
     const [hints, setHints] = useState(hintsInit)
 
@@ -137,12 +153,30 @@ export function Game( {setPage, target} )
     function enterChar(key)
     {
         const char = key_to_ipa[key]
-        setCurrentGuess(previousGuess => previousGuess.length < 5 ? previousGuess + char : previousGuess)
+
+        function enter(previousGuess)
+        {
+            console.log(previousGuess)
+
+            const lastLetter = previousGuess.at(-1)
+            const lettersBefore = previousGuess.slice(0, -1)
+
+            if (char === "j" && y_keybinds[lastLetter])
+                return [...lettersBefore, y_keybinds[lastLetter]]
+            else if (char === "w" && w_keybinds[lastLetter])
+                return [...lettersBefore, w_keybinds[lastLetter]]
+            else if (char === lastLetter && long_keybinds[lastLetter])
+                return [...lettersBefore, long_keybinds[lastLetter]]
+            else
+                return previousGuess.length < 5 ? [...previousGuess, char] : previousGuess
+        }
+
+        setCurrentGuess(enter)
     }
 
     function backspace()
     {
-        setCurrentGuess(previousGuess => previousGuess.substring(0, previousGuess.length - 1))
+        setCurrentGuess(previousGuess => previousGuess.slice(0, -1))
     }
 
     function enterGuess()
