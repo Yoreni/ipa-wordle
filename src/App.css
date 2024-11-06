@@ -7,6 +7,11 @@
   pointer-events: none;
 }
 
+@font-face {
+  font-family: Noto-Sans;
+  src: url("NotoSans-VariableFont_wdth\,wght.ttf");
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -39,16 +44,29 @@
 
 .undiscovered {
   background-color: white;
+  border: 2px solid lightgrey   
 }
 
 .not-in-word {
   background-color: grey;
+  border: 2px solid black   
 }
 
 .almost-hint {
   background-color: yellow;
+  border: 2px solid darkgoldenrod   
 }
 
 .correct {
   background-color: green;
+  border: 2px solid darkgreen
+}
+
+.key {
+  min-width: 2em;
+  height: 2em;
+  font-size: 26px;
+  border-radius: 0.4em;
+  margin: 2px;
+  font-family: Noto-Sans;
 }

@@ -46,7 +46,7 @@ function Key( {char, onPress, hints} )
         return keyClasses[hint] ?? keyClasses[0]
     }
 
-    return (<button onClick={() => onPress(char)} className={getClass()}>{char}</button>)
+    return (<button onClick={() => onPress(char)} className={`${getClass()} key`}>{char}</button>)
 }
 
 /*
