@@ -1,7 +1,40 @@
 const keyClasses = ["undiscovered", "not-in-word", "almost-hint", "correct"]
-const row1 = "qwertyuiop".split("")
-const row2 = "asdfghjkl".split("")
-const row3 = "zxcvbnm".split("")
+const row0 = ["ɑː", "ɛː", "oː", "ɪː", "ɵː", "əː", "ɑj", "ɛj", "ɪj", "oj", "θ", "ð"]
+const row1 = "ŋwertjɵɪɔpʃʒ".split("")
+const row2 = ['a', 's', 'd', 'f', 'g', 'h', 'ʤ', 'k', 'l', "aw", "ʉw", "əw"]
+const row3 = "zəʧvbnm".split("")
+
+//     "1": "ɑː",
+//     "2": "ɛː",
+//     "3": "oː",
+//     "4": "ɪː",
+//     "5": "ɵː",
+//     "6": "əː",
+//     "7": "əw",
+//     // "8": "",
+//     // "9": "",
+//     // "0": "",
+//     "-": "θ",
+//     "=": "ð",
+//     "[": "ʃ",
+//     "]": "ʒ",
+//     // ";": "",
+//     // "'": "",
+//     // "#": "",
+// }
+
+// const y_keybinds = {
+//     "a": "ɑj",
+//     "ɛ": "ɛj",
+//     "ɪ": "ɪj",
+//     "ɔ": "oj"
+// }
+
+// const w_keybinds = {
+//     "a": "aw",
+//     "ɵ": "ʉw",
+// }
+
 
 function Key( {char, onPress, hints} )
 {
@@ -28,17 +61,20 @@ export function Keyboard( {onPress, onBackspace, onEnter, hintsRef} )
 {
     const hints = hintsRef.current
 
+    function makeRow(chars)
+    {
+        return (
+        <div>
+            {chars.map(char => <Key key={char} onPress={onPress} char={char} hints={hints}/>)}
+        </div>)
+    }
+
     return (
     <>
-        <div>
-            {row1.map(char => <Key key={char} onPress={onPress} char={char} hints={hints}/>)}
-        </div>
-        <div>
-            {row2.map(char => <Key key={char} onPress={onPress} char={char} hints={hints}/>)}
-        </div>
-        <div>
-            {row3.map(char => <Key key={char} onPress={onPress} char={char} hints={hints}/>)}
-        </div>
+        {makeRow(row0)}
+        {makeRow(row1)}
+        {makeRow(row2)}
+        {makeRow(row3)}
         <div>
             <Key char="Backspace" key="0" onPress={onBackspace}/>
             <Key char="Enter" key="1" onPress={onEnter}/>

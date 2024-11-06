@@ -150,14 +150,10 @@ export function Game( {setPage, target} )
     const guessesRef = useStateRef(guesses);
     const hintsRef = useStateRef(hints)
 
-    function enterChar(key)
+    function enterChar(char)
     {
-        const char = key_to_ipa[key]
-
         function enter(previousGuess)
         {
-            console.log(previousGuess)
-
             const lastLetter = previousGuess.at(-1)
             const lettersBefore = previousGuess.slice(0, -1)
 
@@ -213,10 +209,11 @@ export function Game( {setPage, target} )
         if (event.key === "Backspace")
             backspace()
         if (key_to_ipa[event.key])
-            enterChar(event.key)
+            enterChar(key_to_ipa[event.key])
         if (event.key === "Enter")
             enterGuess()
     })
+
 
     return (
     <div>
