@@ -14,15 +14,15 @@ export function BoardRow({ index, currentGuess, guesses, target, hints })
         const char = word[charIndex]
         if (index >= guesses.length)
             return "white"
-        if (!target.includes(char))
+        if (!target.ipa.includes(char))
             return "grey"
-        if (char === target[charIndex])
+        if (char === target.ipa[charIndex])
             return "green"
         return "yellow"
     }
 
     const word = getWord();
-    
+
     let boardColums = []
     for (let charIndex = 0; charIndex < 5; ++charIndex)
     {

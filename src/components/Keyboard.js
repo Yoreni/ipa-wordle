@@ -1,40 +1,8 @@
 const keyClasses = ["undiscovered", "not-in-word", "almost-hint", "correct"]
 const row0 = ["ɑː", "ɛː", "oː", "ɪː", "ɵː", "əː", "ɑj", "ɛj", "ɪj", "oj", "θ", "ð"]
-const row1 = "ŋwertjɵɪɔpʃʒ".split("")
+const row1 = "ŋwɛrtjɵɪɔpʃʒ".split("")
 const row2 = ['a', 's', 'd', 'f', 'g', 'h', 'ʤ', 'k', 'l', "aw", "ʉw", "əw"]
 const row3 = "zəʧvbnm".split("")
-
-//     "1": "ɑː",
-//     "2": "ɛː",
-//     "3": "oː",
-//     "4": "ɪː",
-//     "5": "ɵː",
-//     "6": "əː",
-//     "7": "əw",
-//     // "8": "",
-//     // "9": "",
-//     // "0": "",
-//     "-": "θ",
-//     "=": "ð",
-//     "[": "ʃ",
-//     "]": "ʒ",
-//     // ";": "",
-//     // "'": "",
-//     // "#": "",
-// }
-
-// const y_keybinds = {
-//     "a": "ɑj",
-//     "ɛ": "ɛj",
-//     "ɪ": "ɪj",
-//     "ɔ": "oj"
-// }
-
-// const w_keybinds = {
-//     "a": "aw",
-//     "ɵ": "ʉw",
-// }
-
 
 function Key( {char, onPress, hints} )
 {
