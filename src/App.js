@@ -22,8 +22,9 @@ function App()
 		}
 		if (["win", "lose", "menu"].includes(page))
 		{
-			const winMessage = <p>You win, Congrats!</p>
-			const loseMessage = <p>You lost. The word was {targetWord}.</p>
+			const targetWordFormat = `/${targetWord.ipa.join("")}/ (spelled: ${targetWord.spellings.join(", ")})`
+			const winMessage = <p>You win, Congrats! It was {targetWordFormat}</p>
+			const loseMessage = <p>You lost. The word was {targetWordFormat}.</p>
 
 			return (<>
 				{page === "win" && winMessage}
