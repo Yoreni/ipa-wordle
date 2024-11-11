@@ -18,7 +18,9 @@ function App()
 	{
 		if (page === "game")
 		{
-			return <Game setPage={setPage} target={targetWord}/>
+			return <>
+				<Game setPage={setPage} target={targetWord}/>
+			</>
 		}
 		if (["win", "lose", "menu"].includes(page))
 		{
