@@ -7,18 +7,10 @@ import IKeyImage from "../assets/I_Key_Light.png"
 import UKeyImage from "../assets/U_Key_Light.png"
 import JKeyImage from "../assets/J_Key_Light.png"
 import XKeyImage from "../assets/X_Key_Light.png"
-// import WKeyImage from "../assets/E_Key_Light.png"
-import Key0Image from "../assets/0_Key_Light.png"
-import Key1Image from "../assets/1_Key_Light.png"
-import Key2Image from "../assets/2_Key_Light.png"
-import Key3Image from "../assets/3_Key_Light.png"
-import Key4Image from "../assets/4_Key_Light.png"
-import Key5Image from "../assets/5_Key_Light.png"
-import Key6Image from "../assets/6_Key_Light.png"
-import Key7Image from "../assets/7_Key_Light.png"
-import Key8Image from "../assets/8_Key_Light.png"
-import Key9Image from "../assets/9_Key_Light.png"
-
+import AKeyImage from "../assets/A_Key_Light.png"
+import WKeyImage from "../assets/W_Key_Light.png"
+import LeftBracetKeyImage from "../assets/Bracket_Left_Key_Light.png"
+import RightBracetKeyImage from "../assets/Bracket_Right_Key_Light.png"
 
 
 
@@ -32,32 +24,48 @@ const row2 = ['a', 's', 'd', 'f', 'g', 'h', 'ʤ', 'k', 'l', "aw", "ʉw", "əw"]
 const row3 = "zəʧvbnm".split("")
 
 const keyHints = {
-    // "ɑː": "a a",
-    // "ɛː": "e e",
-    // "ɪː": "i i",
-    // "oː": "o o",
-    // "ɵː": "u u",
-    // "əː": "x x",
-    // "ɑj": "a y",
-    // "ɛj": "e y",
-    // "ɪj": "i y",
-    // "oj": "o y",
+    "ɑː": new Array(2).fill(AKeyImage),
+    "ɛː": new Array(2).fill(EKeyImage),
+    "ɪː": new Array(2).fill(IKeyImage),
+    "oː": new Array(2).fill(OKeyImage),
+    "ɵː": new Array(2).fill(UKeyImage),
+    "əː": new Array(2).fill(XKeyImage),
+    "ɑj": [AKeyImage, YKeyImage],
+    "ɛj": [EKeyImage, YKeyImage],
+    "ɪj": [IKeyImage, YKeyImage],
+    "oj": [OKeyImage, YKeyImage],
     // "θ": "-",
     // "ð": "=",
-    // "ʃ": "[",
-    // "ʒ": "]",
-    // "aw": "a w",
-    // "ʉw": "u w",
+    "ʃ": [LeftBracetKeyImage],
+    "ʒ": [RightBracetKeyImage],
+    "aw": [AKeyImage, WKeyImage],
+    "ʉw": [UKeyImage, WKeyImage],
     // "əw": "#",
-    "ŋ": QKeyImage,
-    "ɛ": EKeyImage,
-    "j": YKeyImage,
-    "ɵ": UKeyImage,
-    "ɪ": IKeyImage,
-    "ɔ": OKeyImage,
-    "ʤ": JKeyImage,
-    "ə": XKeyImage,
-    "ʧ": CKeyImage,
+    "ŋ": [QKeyImage],
+    "ɛ": [EKeyImage],
+    "j": [YKeyImage],
+    "ɵ": [UKeyImage],
+    "ɪ": [IKeyImage],
+    "ɔ": [OKeyImage],
+    "ʤ": [JKeyImage],
+    "ə": [XKeyImage],
+    "ʧ": [CKeyImage],
+}
+
+function KeybindDisplay( {char} )
+{
+    const keybind = keyHints[char]
+    if (!keybind)
+        return
+
+    const style = {"width": "24px", "height": "24px", "margin": "-2px"}
+
+    return (
+    <span className="key-hint">
+        <img src={keybind[0]} style={style} />
+        {keybind[1] && <img src={keybind[1]} style={style} />}
+    </span>
+    )
 }
 
 function Key( {char, onPress, hints} )
@@ -70,11 +78,14 @@ function Key( {char, onPress, hints} )
         return keyClasses[hint] ?? keyClasses[0]
     }
 
+    let keybindDisplay;
+    if (keyHints[char])
+        keybindDisplay = keyHints[char].map(imgSrc => <img src={imgSrc} className="key-hint" style={{"width": "24px", "height": "24px"}} />)
+
     return (
         <button onClick={() => onPress(char)} className={`${getClass()} key`}>
             <span className="centre">{char}</span>
-            {/* <span className="key-hint">{keyHints[char] ?? ""}</span> */}
-            {keyHints[char] && <img src={keyHints[char]} className="key-hint" style={{"width": "24px", "height": "24px"}}></img>}
+            <KeybindDisplay char={char}/> 
         </button>
     )
 }
