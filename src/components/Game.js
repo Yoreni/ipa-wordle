@@ -195,9 +195,10 @@ export function Game( {setPage, target} )
         const currentGuesses = guessesRef.current;
 
 
+        const hasAlreadyGuessed = currentGuesses.map(guess => arraysEqual(guess, lastetGuess)).some(element => element === true)
         const isValid = lastetGuess.length === 5 && isWord(lastetGuess) && currentGuesses.length < 6 
-            && !currentGuesses.includes(lastetGuess);
-        console.log(lastetGuess.length === 5, isWord(lastetGuess), currentGuesses.length < 6, !currentGuesses.includes(lastetGuess))
+            && !hasAlreadyGuessed;
+        console.log(currentGuesses.map(guess => arraysEqual(guess, lastetGuess)))
         if (isValid)
         {
             hintsRef.current = evalHints(target, lastetGuess, hintsRef.current, setHints);

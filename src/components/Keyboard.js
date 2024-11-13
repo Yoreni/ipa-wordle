@@ -11,7 +11,9 @@ import AKeyImage from "../assets/A_Key_Light.png"
 import WKeyImage from "../assets/W_Key_Light.png"
 import LeftBracetKeyImage from "../assets/Bracket_Left_Key_Light.png"
 import RightBracetKeyImage from "../assets/Bracket_Right_Key_Light.png"
-
+import HashKeyImage from "../assets/Hash_Key_Light.png"
+import MinusKeyImage from "../assets/Minus_Key_Light.png"
+import EqualsKeyImage from "../assets/Equals_Key_Light.png"
 
 
 
@@ -34,13 +36,13 @@ const keyHints = {
     "ɛj": [EKeyImage, YKeyImage],
     "ɪj": [IKeyImage, YKeyImage],
     "oj": [OKeyImage, YKeyImage],
-    // "θ": "-",
-    // "ð": "=",
+    "θ": [MinusKeyImage],
+    "ð": [EqualsKeyImage],
     "ʃ": [LeftBracetKeyImage],
     "ʒ": [RightBracetKeyImage],
     "aw": [AKeyImage, WKeyImage],
     "ʉw": [UKeyImage, WKeyImage],
-    // "əw": "#",
+    "əw": [HashKeyImage],
     "ŋ": [QKeyImage],
     "ɛ": [EKeyImage],
     "j": [YKeyImage],
