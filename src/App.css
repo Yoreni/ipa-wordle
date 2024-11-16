@@ -11,6 +11,29 @@ body {
   pointer-events: none;
 }
 
+
+
+p {
+  font-family: Noto-Sans;
+}
+
+h1 {
+  font-family: Noto-Sans;
+}
+
+.button {
+  font-family: Noto-Sans;  
+  font-weight: bold;
+  background-color: wheat;
+  border-radius: 0.4em;
+  font-size: 18px;
+  border: 2px solid sienna;
+}
+
+.button:hover {
+  filter: brightness(120%);
+}
+
 @font-face {
   font-family: Noto-Sans;
   src: url("NotoSans-VariableFont_wdth\,wght.ttf");

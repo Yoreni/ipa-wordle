@@ -5,7 +5,7 @@ import { getRandomWord } from './dictionary';
 
 function App() 
 {
-	const [page, setPage] = useState("game")
+	const [page, setPage] = useState("menu")
 	const [targetWord, setTargetWord] = useState(getRandomWord());
 
 	function newGame()
@@ -32,7 +32,7 @@ function App()
 				{page === "win" && winMessage}
 				{page === "lose" && loseMessage}
 				<h1>Menu</h1>
-				<button onClick={newGame}>Play</button>
+				<button className="button" onClick={newGame}>Play</button>
 			</>)
 		}
 	}
