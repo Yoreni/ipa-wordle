@@ -113,7 +113,7 @@ export function Keyboard( {onPress, onBackspace, onEnter, hintsRef} )
     }
 
     return (
-    <>
+    <div className="keyboard">
         {makeRow(row0)}
         {makeRow(row1)}
         {makeRow(row2)}
@@ -122,5 +122,5 @@ export function Keyboard( {onPress, onBackspace, onEnter, hintsRef} )
             <Key char="Backspace" key="0" onPress={onBackspace}/>
             <Key char="Enter" key="1" onPress={onEnter}/>
         </div>
-    </>)
+    </div>)
 }

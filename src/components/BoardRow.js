@@ -1,4 +1,4 @@
-export function BoardRow({ index, currentGuess, guesses, target, hints })
+export function BoardRow({ index, currentGuess, guesses, target})
 {
     function getWord()
     {
@@ -9,16 +9,21 @@ export function BoardRow({ index, currentGuess, guesses, target, hints })
         return [];
     }
 
-    function getBackground(charIndex, word)
+    function getHintClass(charIndex, word)
     {
+        const hintClasses = ["undiscovered", "not-in-word", "almost-hint", "correct", "entered"]
+
         const char = word[charIndex]
+        console.log(char)
+        if (index === guesses.length && char !== undefined)
+            return hintClasses[4]
         if (index >= guesses.length)
-            return "white"
+            return hintClasses[0]
         if (!target.ipa.includes(char))
-            return "grey"
+            return hintClasses[1]
         if (char === target.ipa[charIndex])
-            return "green"
-        return "yellow"
+            return hintClasses[3]
+        return hintClasses[2]
     }
 
     const word = getWord();
@@ -27,11 +32,12 @@ export function BoardRow({ index, currentGuess, guesses, target, hints })
     for (let charIndex = 0; charIndex < 5; ++charIndex)
     {
         const char = word[charIndex];
-        boardColums.push(<td style={{backgroundColor: getBackground(charIndex, word)}}>{char ?? " "}</td>); 
+        const hintClass = getHintClass(charIndex, word)
+        boardColums.push(<td className={`board-cell ${hintClass}`}>{char ?? " "}</td>); 
     }
 
     return (<div>
-    <table border="1" style={{width: "10%", height: "32px", tableLayout: "fixed", wordWrap: "break-word"}}>
+    <table border="1" className="board">
         <tr>
             {boardColums}
         </tr>

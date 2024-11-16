@@ -235,7 +235,7 @@ export function Game( {setPage, target} )
     return (
     <div>
         <Board currentGuess={currentGuess} guesses={guesses} target={target} hints={hints}/>
-        <Keyboard onPress={enterChar} onBackspace={backspace} onEnter={enterGuess} hintsRef={hintsRef}></Keyboard>
+        <Keyboard onPress={enterChar} onBackspace={backspace} onEnter={enterGuess} hintsRef={hintsRef} className="keyboard"></Keyboard>
     </div>
     );
 }
