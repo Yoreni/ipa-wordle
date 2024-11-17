@@ -31,7 +31,7 @@ function App()
 			return (<>
 				{page === "win" && winMessage}
 				{page === "lose" && loseMessage}
-				<h1>Menu</h1>
+				<h1>IPA Wordle</h1>
 				<button className="button" onClick={newGame}>Play</button>
 			</>)
 		}
