@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/ipa-wordle/static/css/main.45cb7a9f.css",
+    "main.js": "/ipa-wordle/static/js/main.8ec1b7b6.js",
+    "static/js/453.ba0bcc1f.chunk.js": "/ipa-wordle/static/js/453.ba0bcc1f.chunk.js",
+    "static/media/NotoSans-VariableFont_wdth,wght.ttf": "/ipa-wordle/static/media/NotoSans-VariableFont_wdth,wght.b1d0ab70303caea663db.ttf",
+    "index.html": "/ipa-wordle/index.html",
+    "main.45cb7a9f.css.map": "/ipa-wordle/static/css/main.45cb7a9f.css.map",
+    "main.8ec1b7b6.js.map": "/ipa-wordle/static/js/main.8ec1b7b6.js.map",
+    "453.ba0bcc1f.chunk.js.map": "/ipa-wordle/static/js/453.ba0bcc1f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.45cb7a9f.css",
+    "static/js/main.8ec1b7b6.js"
+  ]
+}
